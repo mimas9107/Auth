@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Data & Config (Sensitive or local data)
+.data/
+user_configs/
+auth_users.json
+.env
+authconfig.json
+
+# IDEs
+.vscode/
+.idea/
+
+# UV
+uv.lock
+.python-version
+
+# Testing
+.pytest_cache/
+.test_data/
+reports/

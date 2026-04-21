@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入 - Auth Service</title>
+    <!-- 引入元件化樣式表 -->
+    <link rel="stylesheet" href="css/auth-style.css">
+</head>
+
+<body class="auth-page">
+    <!-- 背景裝飾效果 -->
+    <div class="background-blob"></div>
+
+    <!-- 認證卡片主體 -->
+    <div class="auth-card" id="loginForm">
+        <h1 id="brandName">Auth Service</h1>
+        <p id="formTitle">請登入以繼續使用服務</p>
+
+        <!-- 錯誤訊息提示區 -->
+        <div class="error-message" id="errorMsg"></div>
+
+        <!-- 登入/註冊表單 -->
+        <form id="authForm">
+            <div class="form-group">
+                <label for="username">使用者名稱</label>
+                <input type="text" id="username" placeholder="請輸入使用者名稱" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">密碼</label>
+                <input type="password" id="password" placeholder="請輸入密碼" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">登入</button>
+        </form>
+
+        <!-- 表單底部切換連結 -->
+        <div class="auth-footer">
+            <span id="footerText">還沒有帳號嗎？</span>
+            <a href="#" id="toggleMode">立即註冊</a>
+        </div>
+    </div>
+
+    <!-- 前端互動邏輯 -->
+    <script type="module">
+        import { auth } from './js/auth-client.js';
+
+        // 狀態管理：目前是否為登入模式
+        let isLoginMode = true;
+
+        // DOM 元素選取
+        const form = document.getElementById('authForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const toggleMode = document.getElementById('toggleMode');
+        const formTitle = document.getElementById('formTitle');
+        const footerText = document.getElementById('footerText');
+        const errorMsg = document.getElementById('errorMsg');
+
+        /**
+         * 切換登入與註冊模式的 UI 顯示
+         */
+        toggleMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+
+            if (isLoginMode) {
+                formTitle.textContent = '請登入以繼續使用服務';
+                submitBtn.textContent = '登入';
+                footerText.textContent = '還沒有帳號嗎？';
+                toggleMode.textContent = '立即註冊';
+            } else {
+                formTitle.textContent = '建立您的新帳號';
+                submitBtn.textContent = '註冊';
+                footerText.textContent = '已經有帳號了？';
+                toggleMode.textContent = '登入帳號';
+            }
+            errorMsg.style.display = 'none';
+        });
+
+        /**
+         * 處理表單提交
+         */
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // UI 狀態更新：顯示讀取中
+            errorMsg.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.textContent = isLoginMode ? '登入中...' : '註冊中...';
+
+            try {
+                if (isLoginMode) {
+                    // 執行登入邏輯
+                    await auth.login(username, password);
+                    // 登入成功後跳轉至主頁
+                    window.location.href = 'index.html';
+                } else {
+                    // 執行註冊邏輯
+                    await auth.register(username, password);
+                    alert('註冊成功！請登入。');
+                    // 註冊成功後自動切回登入模式
+                    toggleMode.click();
+                }
+            } catch (err) {
+                // 顯示錯誤訊息
+                errorMsg.textContent = err.message;
+                errorMsg.style.display = 'block';
+                submitBtn.textContent = isLoginMode ? '登入' : '註冊';
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

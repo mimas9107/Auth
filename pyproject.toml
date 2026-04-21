@@ -1,0 +1,21 @@
+[project]
+name = "auth-service"
+version = "1.0.0"
+description = "A modular authentication service component"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "python-jose[cryptography]",
+    "passlib[recommended]",
+    "python-multipart",
+    "python-dotenv",
+    "requests",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# 隱藏來自 passlib 的棄用警告
+filterwarnings = [
+    "ignore::DeprecationWarning:passlib.utils",
+]

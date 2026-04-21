@@ -1,0 +1,14 @@
+[project]
+name = "example"
+version = "1.0.0"
+description = "Auth Service integration example"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "python-jose[cryptography]",
+    "passlib[recommended]",
+    "python-multipart",
+    "python-dotenv",
+]
