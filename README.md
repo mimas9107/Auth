@@ -1,3 +1,12 @@
+---
+name:          "README.md"
+description:   "Main project documentation and overview."
+created_date:  "2026/04/21 00:00:00"
+modified_date: "2026/06/18 10:00:00"
+project_version: "1.0.0"
+document_version: "1.0.0"
+agent_sign: ['gemini cli/gemini-2.0-flash-exp']
+---
 # Auth Service Component
 
 這是一個解耦、可重複利用的前後端認證服務框架，專為快速整合使用者管理與 JWT 認證功能而設計。

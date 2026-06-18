@@ -1,3 +1,12 @@
+---
+name:          "CHANGELOG.md"
+description:   "Project version history and release notes."
+created_date:  "2026/04/21 00:00:00"
+modified_date: "2026/06/18 10:00:00"
+project_version: "1.0.0"
+document_version: "1.0.0"
+agent_sign: ['gemini cli/gemini-2.0-flash-exp']
+---
 # CHANGELOG
 
 本專案版本遵循 `MAJOR.MINOR.PATCH` 規範。
